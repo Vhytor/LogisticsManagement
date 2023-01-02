@@ -15,6 +15,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    public CustomerServiceImpl(CustomerRepository customerRepository){
+        this.customerRepository = customerRepository;
+    }
     @Override
     public CreateCustomerResponse customerRegister(CreateCustomerRegister createCustomerRegister) {
         CreateCustomerResponse createCustomerResponse = new CreateCustomerResponse();

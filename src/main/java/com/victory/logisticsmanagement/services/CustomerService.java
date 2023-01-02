@@ -7,7 +7,7 @@ import com.victory.logisticsmanagement.payload.response.CreateCustomerResponse;
 import org.springframework.stereotype.Service;
 
 
-@Service
+
 public interface CustomerService {
      CreateCustomerResponse customerRegister(CreateCustomerRegister createCustomerRegister);
      Customer getCustomerByEmail(String email) throws CustomerNotFound;
