@@ -5,6 +5,8 @@ import com.victory.logisticsmanagement.data.repositories.CustomerRepository;
 import com.victory.logisticsmanagement.exceptions.CustomerNotFound;
 import com.victory.logisticsmanagement.payload.request.CreateCustomerRegister;
 import com.victory.logisticsmanagement.payload.response.CreateCustomerResponse;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +15,14 @@ import java.util.Optional;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-    @Autowired
-    private CustomerRepository customerRepository;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository){
+    CustomerRepository customerRepository;
+    ModelMapper modelMapper;
+
+    @Autowired
+    public CustomerServiceImpl(CustomerRepository customerRepository,ModelMapper modelMapper){
         this.customerRepository = customerRepository;
+        this.modelMapper = modelMapper;
     }
     @Override
     public CreateCustomerResponse customerRegister(CreateCustomerRegister createCustomerRegister) {
@@ -45,6 +50,15 @@ public class CustomerServiceImpl implements CustomerService {
         if(customer == null){
             throw new CustomerNotFound("Customer doesn't exist");
         }
+        return customer;
+    }
+
+    @Override
+    public Customer updateCustomerInfo(String email, CreateCustomerRegister createCustomerRegister) {
+        Customer customer = customerRepository.findCustomerByEmail(email);
+        modelMapper.getConfiguration().setSkipNullEnabled(true);
+        modelMapper.map(email,createCustomerRegister);
+        customerRepository.save(customer);
         return customer;
     }
 

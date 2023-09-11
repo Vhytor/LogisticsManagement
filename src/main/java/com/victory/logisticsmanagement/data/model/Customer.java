@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.lang.annotation.Documented;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -26,5 +28,6 @@ public class Customer {
     private String passWord;
     @Email
     private String email;
+
 
 }
